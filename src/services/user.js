@@ -18,7 +18,7 @@ const userApi = api.injectEndpoints({
         }),
         createUser: build.mutation({
             query: (user) => ({
-                url: `/users/${user.id}`,
+                url: `/users`,
                 method: 'POST',
                 body: user
             }),
