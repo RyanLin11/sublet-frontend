@@ -17,19 +17,6 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import InputLabel from '@mui/material/InputLabel';
 
-const listings = [
-    {
-        id: 1,
-        accommodationType: 'Two Bedrooms', 
-        location: 'Rez-One Fergus House', 
-        rent: 900, 
-        availability: 3, 
-        moveInDate: '11/15/2022', 
-        moveOutDate: '01/05/2023', 
-        imageUrl: 'https://rezone.mediatownprojects.com/uploads/imagemanager/image_5ad4c0fb3792e.jpg'
-    }
-];
-
 function ListingsPage() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [sort, setSort] = useState('-created_at');

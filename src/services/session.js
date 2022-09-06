@@ -14,10 +14,7 @@ const sessionApi = api.injectEndpoints({
         getMySession: build.query({
             query: () => '/sessions/me',
             providesTags: (session, error, args) => [{ type: 'Session', id: 'me' }],
-            transformResponse: (sessions, meta, arg) => {
-                console.log(sessions);
-                return sessions.user_id
-            }
+            transformResponse: (sessions, meta, arg) => sessions.user_id,
         }),
 
         deleteMySession: build.mutation({
