@@ -2,6 +2,8 @@ import TextField from '@mui/material/TextField';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 
 import { useCreateSessionMutation, useGetMySessionQuery } from '../services/session';
 import { useState, useEffect } from 'react';
@@ -36,24 +38,42 @@ function LoginPage() {
     }
 
     return (
-        <Box>
-            <TextField
-                required
-                label='Username'
-                onChange={(e) => setUsername(e.target.value)}
-                value={username}
-            />
-            <TextField
-                required
-                label='Password'
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-            />
-            <Button variant='contained' onClick={handleSubmit}> Login </Button>
-            <Typography> Don't have an account? </Typography> 
-            <Link to='/register'> 
-                <Typography> Create an account </Typography> 
-            </Link>
+        <Box sx={{ height: '100vh', display: 'flex', alignItems: 'center' }}>
+            <Container maxWidth='sm'>
+                <Grid container spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography variant="h3" sx={{ textAlign: 'center' }}> Log In </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            required
+                            label='Username'
+                            onChange={(e) => setUsername(e.target.value)}
+                            value={username}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            fullWidth
+                            required
+                            type='password'
+                            label='Password'
+                            onChange={(e) => setPassword(e.target.value)}
+                            value={password}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Button fullWidth variant='contained' onClick={handleSubmit}> Login </Button>
+                    </Grid>
+                    <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'center' }}>
+                        <Typography> Don't have an account? &nbsp; </Typography> 
+                        <Link to='/register'> 
+                            <Typography> Create an account </Typography> 
+                        </Link>
+                    </Grid>
+                </Grid>
+            </Container> 
         </Box>
     )
 }
