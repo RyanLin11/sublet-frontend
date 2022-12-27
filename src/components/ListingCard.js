@@ -20,20 +20,38 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Divider from '@mui/material/Divider';
 import { useEditListingMutation, useDeleteListingMutation } from '../services/listing';
+import { useGetMySessionQuery } from '../services/session';
+import { useGetUserQuery } from '../services/user';
+import { useSnackbar } from 'notistack';
 import { useNavigate } from 'react-router-dom';
 
 function ListingCard({ listing }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
+    const [deleteListing] = useDeleteListingMutation();
+    const mySession = useGetMySessionQuery();
+    const userQuery = useGetUserQuery(listing.user_id, {
+        refetchOnMountOrArgChange: true
+    });
+
+    async function handleDeleteListing(e) {
+        try {
+            await deleteListing(listing.id).unwrap();
+            enqueueSnackbar(`Listing ${listing.id} deleted successfully`, { variant: 'Success' })
+        } catch (e) {
+            enqueueSnackbar(e.data.message, { variant: 'Error' });
+        }
+    }
 
     return (
         <Card>
             <CardHeader
                 avatar={
-                    <Avatar sx={{ bgcolor: red[500] }} aria-label="profile-photo"> R </Avatar>
+                    <Avatar sx={{ bgcolor: red[500] }} aria-label="profile-photo"> { userQuery.isSuccess && (userQuery.data.display_name? userQuery.data.display_name : userQuery.data.username).charAt(0).toUpperCase() } </Avatar>
                 }
-                action={
+                action={ mySession.data == listing.user_id &&
                     <IconButton aria-label="settings" onClick={(e) => setAnchorEl(e.currentTarget)}>
                         <MoreVertIcon />
                     </IconButton>
@@ -41,6 +59,7 @@ function ListingCard({ listing }) {
                 title={listing.accommodation_type}
                 subheader={listing.address}
             />
+            { mySession.isSuccess && mySession.data == listing.user_id &&
             <Popover
                 open={open}
                 anchorEl={anchorEl}
@@ -58,12 +77,13 @@ function ListingCard({ listing }) {
                     </ListItem>
                     <Divider />
                     <ListItem disablePadding>
-                        <ListItemButton>
+                        <ListItemButton onClick={handleDeleteListing}>
                             <ListItemText primary="Delete" />
                         </ListItemButton>
                     </ListItem>
                 </List>
             </Popover>
+            }
             <CardMedia
                 component="img"
                 height="194"

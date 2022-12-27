@@ -125,8 +125,23 @@ function EditListingPage() {
                         onChange={handleChange}
                     />
                 </Grid>
+                
                 <Grid item xs={12}>
                     <Button fullWidth variant='contained' onClick={handleSubmit}> Save Changes </Button>
+                </Grid>
+
+                <Grid item xs={12}>
+                    <Button
+                        variant="contained"
+                        component="label"
+                        fullWidth
+                    >
+                        Upload file 
+                        <input
+                            type="file"
+                            hidden
+                        />
+                    </Button>
                 </Grid>
             </Grid>
             }

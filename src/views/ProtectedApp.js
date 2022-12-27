@@ -32,7 +32,7 @@ function ProtectedApp() {
                 showLabels
                 value={tab}
                 onChange={(event, newTab) => setTab(newTab)}
-                sx={{ flexGrow: 0 }}
+                sx={{ flexGrow: 0, position: 'fixed', bottom: 0, width: '100%' }}
             >
                 { navOptions.map(({ label, link, icon }) => 
                     <BottomNavigationAction key={label} component={Link} label={label} to={link} icon={icon} />
